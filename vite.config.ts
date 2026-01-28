@@ -18,4 +18,5 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  base: "/", // root because site will be at https://sherylslings.github.io
 }));
