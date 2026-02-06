@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
 import type { Carrier } from '@/lib/types';
@@ -12,9 +13,12 @@ interface CarrierCardProps {
 }
 
 export const CarrierCard = ({ carrier }: CarrierCardProps) => {
-  const { getWhatsAppLink } = useSiteSettingsContext();
-  const whatsappLink = getWhatsAppLink(
-    `Hi! I'm interested in renting the ${carrier.brand_name} ${carrier.model_name}.`
+  const { getWhatsAppLink, settings } = useSiteSettingsContext();
+  const whatsappLink = useMemo(
+    () => getWhatsAppLink(
+      `Hi! I'm interested in renting the ${carrier.brand_name} ${carrier.model_name}.`
+    ),
+    [getWhatsAppLink, carrier.brand_name, carrier.model_name, settings.whatsapp_number]
   );
 
   return (

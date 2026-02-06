@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, MessageCircle, Info } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
@@ -15,7 +15,7 @@ const CarrierDetailPage = () => {
   const { data: carrier, isLoading } = useCarrier(id!);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
-  const { getWhatsAppLink } = useSiteSettingsContext();
+  const { getWhatsAppLink, settings } = useSiteSettingsContext();
 
   if (isLoading) {
     return (
@@ -46,8 +46,11 @@ const CarrierDetailPage = () => {
     );
   }
 
-  const whatsappLink = getWhatsAppLink(
-    `Hi! I'm interested in the ${carrier.brand_name} ${carrier.model_name}. Is it available?`
+  const whatsappLink = useMemo(
+    () => getWhatsAppLink(
+      `Hi! I'm interested in the ${carrier.brand_name} ${carrier.model_name}. Is it available?`
+    ),
+    [getWhatsAppLink, carrier.brand_name, carrier.model_name, settings.whatsapp_number]
   );
 
   return (

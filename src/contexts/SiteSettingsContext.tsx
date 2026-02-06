@@ -36,16 +36,12 @@ export const SiteSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
       ...settings,
       // Always keep header nav limited to the 3 pages requested.
       menu_items: enforcedMenuItems,
-      // Lock branding/hero to the live defaults so the hero
-      // doesn't visually "flip" after Supabase loads.
+      // Lock branding to the live defaults so there's no flash on refresh
       brand_name: base.brand_name,
       tagline: base.tagline,
       logo_url: base.logo_url,
-      hero_title: base.hero_title,
-      hero_subtitle: base.hero_subtitle,
-      hero_image_url: base.hero_image_url,
-      hero_cta_text: base.hero_cta_text,
-      hero_cta_link: base.hero_cta_link,
+      // Allow hero content to be dynamic from admin settings
+      // hero_title, hero_subtitle, hero_image_url, hero_cta_text, hero_cta_link will use settings if available
     };
   })();
 
