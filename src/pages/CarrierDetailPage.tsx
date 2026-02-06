@@ -8,12 +8,14 @@ import { BookingModal } from '@/components/carrier/BookingModal';
 import { useCarrier } from '@/hooks/useCarriers';
 import { getCategoryName } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useSiteSettingsContext } from '@/contexts/SiteSettingsContext';
 
 const CarrierDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: carrier, isLoading } = useCarrier(id!);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
+  const { getWhatsAppLink } = useSiteSettingsContext();
 
   if (isLoading) {
     return (
@@ -44,9 +46,9 @@ const CarrierDetailPage = () => {
     );
   }
 
-  const whatsappLink = `https://wa.me/919876543210?text=${encodeURIComponent(
+  const whatsappLink = getWhatsAppLink(
     `Hi! I'm interested in the ${carrier.brand_name} ${carrier.model_name}. Is it available?`
-  )}`;
+  );
 
   return (
     <Layout>

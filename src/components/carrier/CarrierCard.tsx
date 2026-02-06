@@ -5,15 +5,17 @@ import { getCategoryName } from '@/lib/types';
 import { AvailabilityBadge } from './AvailabilityBadge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { useSiteSettingsContext } from '@/contexts/SiteSettingsContext';
 
 interface CarrierCardProps {
   carrier: Carrier;
 }
 
 export const CarrierCard = ({ carrier }: CarrierCardProps) => {
-  const whatsappLink = `https://wa.me/919876543210?text=${encodeURIComponent(
+  const { getWhatsAppLink } = useSiteSettingsContext();
+  const whatsappLink = getWhatsAppLink(
     `Hi! I'm interested in renting the ${carrier.brand_name} ${carrier.model_name}.`
-  )}`;
+  );
 
   return (
     <Card className="group overflow-hidden border-border/50 shadow-card hover:shadow-hover transition-all duration-300">
